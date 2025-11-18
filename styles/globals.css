@@ -1,26 +1,87 @@
+/* ===== Portfolio marquee (auto-scrolling carousel) ===== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-main: 'Bebas Neue', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #ffffff;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-main);
+}
+
+.portfolio-marquee {
+  overflow: hidden;
+  background-color: #ffffff;
+  padding: 2rem 0;
+}
+
+.portfolio-track {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  width: max-content;                 /* track width = content width */
+  animation: portfolio-scroll 60s linear infinite;
+  will-change: transform;
+}
+
+.portfolio-item {
+  flex: 0 0 auto;                     /* don't shrink */
+}
+
+.portfolio-image {
+  height: 220px;
+  width: auto;
+  object-fit: cover;
+  border-radius: 16px;
+  display: block;
+}
+
+/* Smooth infinite scroll */
+@keyframes portfolio-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* because we duplicated the list, half = one full set of images */
+    transform: translateX(-50%);
+  }
+}
+
+
+/* Slightly taller on medium+ screens, CMBT-style product strip feel */
+@media (min-width: 768px) {
+  .portfolio-image {
+    height: 190px;
+  }
+}
+@keyframes bolt-strike {
+  0% {
+    transform: translateY(-120%) scale(0.6);
+    opacity: 0;
+  }
+  40% {
+    transform: translateY(0) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(20%) scale(0.9);
+    opacity: 0;
+  }
+}
+
+.bolt-strike {
+  animation: bolt-strike 0.9s ease-out forwards;
 }
